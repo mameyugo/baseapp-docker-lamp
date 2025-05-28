@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd "$(dirname "$(readlink -f "$0" || realpath "$0")")"
+#cd "$(dirname "$(readlink -f "$0" || realpath "$0")")"
 
 if [ -f .env ]
 then
