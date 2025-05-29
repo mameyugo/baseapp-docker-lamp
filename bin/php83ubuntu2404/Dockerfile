@@ -20,9 +20,11 @@ RUN apt update && apt install -y \
     && apt clean
 
 # install xdebug
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install xdebug \
+ && echo "zend_extension=$(find /usr/lib/php/ -name xdebug.so)" >> /etc/php/8.3/apache2/php.ini
+#RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
@@ -51,8 +53,14 @@ RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
-# Psalm y PHPUnit
-RUN composer global require vimeo/psalm phpunit/phpunit --no-progress --no-suggest
+# Usa un DNS confiable para evitar errores de resolución
+#RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
+
+# Exporta el timeout como variable de entorno (300 segundos por defecto)
+ENV COMPOSER_PROCESS_TIMEOUT=60
+
+# Ejecuta el require sin flags obsoletos
+RUN composer global require vimeo/psalm phpunit/phpunit --no-progress
 
 # Agregar Composer global al PATH
 ENV PATH="/root/.composer/vendor/bin:${PATH}"
@@ -64,7 +72,7 @@ ENV PATH="/root/.composer/vendor/bin:${PATH}"
 WORKDIR /var/www/html
 
 # Fix Permissions
-RUN usermod -u 1000 www-data
+RUN usermod -u 1010 www-data
 
 EXPOSE 80 22
 
