@@ -28,6 +28,7 @@ RUN pecl install xdebug \
 
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Configuración de Apache
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
