@@ -1,4 +1,16 @@
+# Comandos
+
+Para saber las máquinas que están corriendo
+```sh
+# docker ps
+```
+Para entrar por bash a la máquina
+```sh
+# docker exec -it baseapp-php83ubuntu2404 /bin/bash
+```
+
 # docker-compose-lamp - lamp stack environment for developer
+
 
 ![screenshot](https://raw.githubusercontent.com/robertsaupe/docker-compose-lamp/master/.github/screenshot.png)
 
