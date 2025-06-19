@@ -4,7 +4,7 @@ Para saber las máquinas que están corriendo
 ```sh
 # docker ps
 ```
-Para entrar por bash a la máquina
+Para entrar por bash a la máquina (ejecutar en powershell)
 ```sh
 # docker exec -it baseapp-php83ubuntu2404 /bin/bash
 ```
