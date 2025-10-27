@@ -57,6 +57,21 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 # Usa un DNS confiable para evitar errores de resolución
 #RUN echo "nameserver 1.1.1.1" > /etc/resolv.conf
 
+# Instala dependencias de Pdfs
+RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+
+RUN apt -f install
+
+RUN dpkg -i wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+
+RUN apt -f install
+
+RUN dpkg -i wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+
+RUN apt -f install
+
+RUN apt-get install qpdf
+
 # Exporta el timeout como variable de entorno (300 segundos por defecto)
 ENV COMPOSER_PROCESS_TIMEOUT=60
 
